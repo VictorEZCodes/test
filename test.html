@@ -7,16 +7,27 @@
     <h1>Test Page</h1>
     
     <script>
-          (function(w,d,s,o){
-            w.WhisperBoxWidget=o;w[o]=w[o]||function(){
-            (w[o].q=w[o].q||[]).push(arguments)};
-            var f=d.getElementsByTagName(s)[0];
-            var e=d.createElement(s);e.async=1;
-            e.src='https://whisperboxfeed.netlify.app/widget/v1.js';
-            f.parentNode.insertBefore(e,f);
-          })(window,document,'script','whisperbox');
-          
+      console.log('Page starting...');
+      
+      // Create a queue to hold commands before script loads
+      window.whisperboxq = window.whisperboxq || [];
+      
+      (function(w,d,s,o){
+        console.log('Loading widget...');
+        w.WhisperBoxWidget=o;
+        w[o]=w[o]||function(){
+          (w[o].q=w[o].q||[]).push(arguments)
+        };
+        var f=d.getElementsByTagName(s)[0] || d.getElementsByTagName('body')[0];
+        var e=d.createElement(s);
+        e.async=1;
+        e.src='https://whisperboxfeed.netlify.app/widget/v1.js';
+        e.onload = function() {
+          console.log('Widget script loaded, initializing...');
           whisperbox('init', '6767efc00951b03f6656ae4e');
-        </script>
+        };
+        f.parentNode.insertBefore(e,f);
+      })(window,document,'script','whisperbox');
+    </script>
 </body>
 </html>
